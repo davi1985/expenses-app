@@ -43,7 +43,7 @@ export const ExpensesOutput = ({ expenses, expensesPeriodName }) => {
         periodName={expensesPeriodName}
       />
 
-      <ExpensesList />
+      <ExpensesList expenses={DUMMY_EXPENSES} />
     </View>
   );
 };
