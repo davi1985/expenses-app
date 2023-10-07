@@ -2,22 +2,34 @@ import { Pressable, View, Text, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import { getFomattedDate } from "../../util/data";
 
-export const ExpensesItem = ({ description, amount, date }) => (
-  <Pressable>
-    <View style={styles.expenseItem}>
-      <View>
-        <Text style={[styles.textBase, styles.description]}>{description}</Text>
-        <Text style={styles.textBase}>{getFomattedDate(date)}</Text>
-      </View>
+export const ExpensesItem = ({ description, amount, date }) => {
+  const expensePressHandler = () => {};
 
-      <View style={styles.amountContainer}>
-        <Text style={styles.amount}>${amount}</Text>
+  return (
+    <Pressable
+      onPress={expensePressHandler}
+      style={({ pressed }) => pressed && styles.pressed}
+    >
+      <View style={styles.expenseItem}>
+        <View>
+          <Text style={[styles.textBase, styles.description]}>
+            {description}
+          </Text>
+          <Text style={styles.textBase}>{getFomattedDate(date)}</Text>
+        </View>
+
+        <View style={styles.amountContainer}>
+          <Text style={styles.amount}>${amount.toFixed(2)}</Text>
+        </View>
       </View>
-    </View>
-  </Pressable>
-);
+    </Pressable>
+  );
+};
 
 const styles = StyleSheet.create({
+  pressed: {
+    opacity: 0.75,
+  },
   expenseItem: {
     padding: 12,
     marginVertical: 8,
