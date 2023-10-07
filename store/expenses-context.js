@@ -91,7 +91,16 @@ export const ExpensesContextProvier = ({ children }) => {
     });
   };
 
+  const value = {
+    expenses: expensesState,
+    addExpense,
+    deleteExpense,
+    updateExpense,
+  };
+
   return (
-    <ExpensesContext.Provider value={{}}>{children}</ExpensesContext.Provider>
+    <ExpensesContext.Provider value={value}>
+      {children}
+    </ExpensesContext.Provider>
   );
 };
