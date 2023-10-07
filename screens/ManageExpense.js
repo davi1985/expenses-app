@@ -1,9 +1,8 @@
 import { useLayoutEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { Text } from "react-native";
+import { Button } from "../components/UI/Button";
 import { IconButton } from "../components/UI/IconButton";
 import { GlobalStyles } from "../constants/styles";
-import { Button } from "../components/UI/Button";
 
 export const ManageExpense = ({ route, navigation }) => {
   const editedExpenseId = route.params?.expenseId;
@@ -15,9 +14,17 @@ export const ManageExpense = ({ route, navigation }) => {
     });
   }, [navigation, isEditing]);
 
-  const deleteExpenseHandler = () => {};
-  const cancelHandler = () => {};
-  const confirmHandler = () => {};
+  const deleteExpenseHandler = () => {
+    navigation.goBack();
+  };
+
+  const cancelHandler = () => {
+    navigation.goBack();
+  };
+
+  const confirmHandler = () => {
+    navigation.goBack();
+  };
 
   return (
     <View style={styles.container}>
