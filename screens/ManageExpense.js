@@ -35,7 +35,7 @@ export const ManageExpense = ({ route, navigation }) => {
       });
     } else {
       addExpense({
-        description: "RN Course Udemy",
+        description: "Course React Native Academind",
         amount: 25.9,
         date: new Date(),
       });
