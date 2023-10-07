@@ -17,6 +17,7 @@ export const RecentExpenses = () => {
     <ExpensesOutput
       expensesPeriodName="Last 7 Days"
       expenses={recentExpenses}
+      fallbackText="No expenses registered for the last 7 days."
     />
   );
 };
