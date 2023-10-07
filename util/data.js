@@ -1,2 +1,2 @@
-export const getFomattedDate = (date) =>
-  `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+export const getFormattedDate = (date) =>
+  new Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(date);

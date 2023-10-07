@@ -1,7 +1,8 @@
 import { Pressable, View, Text, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
-import { getFomattedDate } from "../../util/data";
+import { getFormattedDate } from "../../util/data";
 import { useNavigation } from "@react-navigation/native";
+import { getFormattedCurrency } from "../../util/currency";
 
 export const ExpensesItem = ({ description, amount, date }) => {
   const { navigate } = useNavigation();
@@ -20,11 +21,11 @@ export const ExpensesItem = ({ description, amount, date }) => {
           <Text style={[styles.textBase, styles.description]}>
             {description}
           </Text>
-          <Text style={styles.textBase}>{getFomattedDate(date)}</Text>
+          <Text style={styles.textBase}>{getFormattedDate(date)}</Text>
         </View>
 
         <View style={styles.amountContainer}>
-          <Text style={styles.amount}>${amount.toFixed(2)}</Text>
+          <Text style={styles.amount}>{getFormattedCurrency(amount)}</Text>
         </View>
       </View>
     </Pressable>
