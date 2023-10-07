@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
+import { getFormattedCurrency } from "../../util/currency";
 
 export const ExpensesSummary = ({ expenses, periodName }) => {
   const expensesSum = expenses.reduce((sum, expense) => {
@@ -9,7 +10,7 @@ export const ExpensesSummary = ({ expenses, periodName }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.period}>{periodName}</Text>
-      <Text style={styles.sum}>${expensesSum.toFixed(2)}</Text>
+      <Text style={styles.sum}>{getFormattedCurrency(expensesSum)}</Text>
     </View>
   );
 };
