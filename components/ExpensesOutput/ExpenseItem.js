@@ -4,11 +4,13 @@ import { getFormattedDate } from "../../util/data";
 import { useNavigation } from "@react-navigation/native";
 import { getFormattedCurrency } from "../../util/currency";
 
-export const ExpensesItem = ({ description, amount, date }) => {
+export const ExpensesItem = ({ id, description, amount, date }) => {
   const { navigate } = useNavigation();
 
   const expensePressHandler = () => {
-    navigate("ManageExpense");
+    navigate("ManageExpense", {
+      expenseId: id,
+    });
   };
 
   return (
