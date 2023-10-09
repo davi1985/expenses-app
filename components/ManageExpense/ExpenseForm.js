@@ -3,11 +3,16 @@ import { Input } from "./Input";
 import { useState } from "react";
 import { Button } from "../UI/Button";
 
-export const ExpenseForm = ({ submitButtonLabel, onCancel, onSubmit }) => {
+export const ExpenseForm = ({
+  submitButtonLabel,
+  onCancel,
+  onSubmit,
+  defaultValues,
+}) => {
   const [inputValues, setInputValues] = useState({
-    amount: "",
-    date: "",
-    description: "",
+    amount: defaultValues ? defaultValues.amount.toString() : "",
+    date: defaultValues ? defaultValues.date.toISOString().slice(0, 10) : "",
+    description: defaultValues ? defaultValues.description.trim() : "",
   });
 
   const inputChangeHandler = (inputIdentifier, enteredValue) => {
