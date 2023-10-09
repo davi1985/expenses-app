@@ -6,7 +6,7 @@ import { Button } from "../UI/Button";
 export const ExpenseForm = ({ submitButtonLabel, onCancel, onSubmit }) => {
   const [inputValues, setInputValues] = useState({
     amount: "",
-    data: "",
+    date: "",
     description: "",
   });
 
@@ -19,7 +19,15 @@ export const ExpenseForm = ({ submitButtonLabel, onCancel, onSubmit }) => {
     });
   };
 
-  const submitHandler = () => {};
+  const submitHandler = () => {
+    const expenseData = {
+      amount: +inputValues.amount,
+      data: new Date(inputValues.data),
+      description: inputValues.description,
+    };
+
+    onSubmit(expenseData);
+  };
 
   return (
     <View style={styles.form}>

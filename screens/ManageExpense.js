@@ -27,19 +27,11 @@ export const ManageExpense = ({ route, navigation }) => {
     navigation.goBack();
   };
 
-  const confirmHandler = () => {
+  const confirmHandler = (expenseData) => {
     if (isEditing) {
-      updateExpense(getId, {
-        description: "Edited title",
-        amount: 25.9,
-        date: new Date(),
-      });
+      updateExpense(getId, expenseData);
     } else {
-      addExpense({
-        description: "Course React Native Academind",
-        amount: 25.9,
-        date: new Date(),
-      });
+      addExpense(expenseData);
     }
 
     navigation.goBack();
@@ -48,6 +40,7 @@ export const ManageExpense = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <ExpenseForm
+        onSubmit={confirmHandler}
         onCancel={cancelHandler}
         submitButtonLabel={isEditing ? "Update" : "Add"}
       />
