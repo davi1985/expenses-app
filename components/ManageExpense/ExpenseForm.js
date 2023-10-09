@@ -3,6 +3,7 @@ import { Input } from "./Input";
 import { useState } from "react";
 import { Button } from "../UI/Button";
 import { Alert } from "react-native";
+import { GlobalStyles } from "../../constants/styles";
 
 export const ExpenseForm = ({
   submitButtonLabel,
@@ -77,6 +78,7 @@ export const ExpenseForm = ({
         <Input
           style={styles.rowInput}
           label="Amount"
+          invalid={!inputs.amount.isValid}
           textInputConfig={{
             keyboardType: "decimal-pad",
             onChangeText: inputChangeHandler.bind(this, "amount"),
@@ -87,6 +89,7 @@ export const ExpenseForm = ({
         <Input
           style={styles.rowInput}
           label="Date"
+          invalid={!inputs.date.isValid}
           textInputConfig={{
             placeholder: "YYYY-MM-DD",
             maxLength: 10,
@@ -98,6 +101,7 @@ export const ExpenseForm = ({
 
       <Input
         label="Description"
+        invalid={!inputs.description.isValid}
         textInputConfig={{
           multiline: true,
           onChangeText: inputChangeHandler.bind(this, "description"),
@@ -106,7 +110,9 @@ export const ExpenseForm = ({
       />
 
       {formIsInvalid && (
-        <Text>Invalid input values - please check your entered data!</Text>
+        <Text style={styles.errorText}>
+          Invalid input values - please check your entered data!
+        </Text>
       )}
 
       <View style={styles.buttons}>
@@ -139,6 +145,11 @@ const styles = StyleSheet.create({
   },
   rowInput: {
     flex: 1,
+  },
+  errorText: {
+    textAlign: "center",
+    color: GlobalStyles.colors.error500,
+    margin: 8,
   },
   buttons: {
     marginTop: 24,
