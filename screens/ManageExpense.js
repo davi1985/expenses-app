@@ -9,11 +9,15 @@ import {
   updateExpense as updatedExpensesFirebase,
 } from "../util/http";
 import { LoadingOverlay } from "../components/UI/LoaderOverlay";
+import { ErrorOverlay } from "../components/UI/ErrorOverlay";
 
 export const ManageExpense = ({ route, navigation }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState();
+
   const { deleteExpense, updateExpense, addExpense, expenses } =
     useContext(ExpensesContext);
+
   const getId = route.params?.expenseId;
   const isEditing = !!getId;
 
@@ -27,9 +31,15 @@ export const ManageExpense = ({ route, navigation }) => {
 
   const deleteExpenseHandler = async () => {
     setIsSubmitting(true);
-    await deleteExpense(getId);
-    navigation.goBack();
-    deleteExpense(getId);
+    try {
+      await deleteExpense(getId);
+      deleteExpense(getId);
+
+      navigation.goBack();
+    } catch (error) {
+      setError("Could not delete expense - please try again later");
+      setIsSubmitting(false);
+    }
   };
 
   const cancelHandler = () => {
@@ -39,16 +49,25 @@ export const ManageExpense = ({ route, navigation }) => {
   const confirmHandler = async (expenseData) => {
     setIsSubmitting(true);
 
-    if (isEditing) {
-      updateExpense(getId, expenseData);
-      await updatedExpensesFirebase(getId, expenseData);
-    } else {
-      const id = await storeExpense(expenseData);
-      addExpense({ ...expenseData, id });
-    }
+    try {
+      if (isEditing) {
+        updateExpense(getId, expenseData);
+        await updatedExpensesFirebase(getId, expenseData);
+      } else {
+        const id = await storeExpense(expenseData);
+        addExpense({ ...expenseData, id });
+      }
 
-    navigation.goBack();
+      navigation.goBack();
+    } catch (error) {
+      setError("Could not save expense - please try again later!");
+      setIsSubmitting(false);
+    }
   };
+
+  if (error && !isSubmitting) {
+    return <ErrorOverlay message={error} />;
+  }
 
   if (isSubmitting) {
     return <LoadingOverlay />;
