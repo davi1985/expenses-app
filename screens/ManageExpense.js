@@ -1,4 +1,4 @@
-import { useContext, useLayoutEffect } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { IconButton } from "../components/UI/IconButton";
 import { GlobalStyles } from "../constants/styles";
@@ -8,8 +8,10 @@ import {
   storeExpense,
   updateExpense as updatedExpensesFirebase,
 } from "../util/http";
+import { LoadingOverlay } from "../components/UI/LoaderOverlay";
 
 export const ManageExpense = ({ route, navigation }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { deleteExpense, updateExpense, addExpense, expenses } =
     useContext(ExpensesContext);
   const getId = route.params?.expenseId;
@@ -24,6 +26,7 @@ export const ManageExpense = ({ route, navigation }) => {
   }, [navigation, isEditing]);
 
   const deleteExpenseHandler = async () => {
+    setIsSubmitting(true);
     await deleteExpense(getId);
     navigation.goBack();
     deleteExpense(getId);
@@ -34,6 +37,8 @@ export const ManageExpense = ({ route, navigation }) => {
   };
 
   const confirmHandler = async (expenseData) => {
+    setIsSubmitting(true);
+
     if (isEditing) {
       updateExpense(getId, expenseData);
       await updatedExpensesFirebase(getId, expenseData);
@@ -44,6 +49,10 @@ export const ManageExpense = ({ route, navigation }) => {
 
     navigation.goBack();
   };
+
+  if (isSubmitting) {
+    return <LoadingOverlay />;
+  }
 
   return (
     <View style={styles.container}>
