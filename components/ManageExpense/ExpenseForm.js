@@ -45,7 +45,7 @@ export const ExpenseForm = ({
       description: inputs.description.value,
     };
 
-    const amountValid = isNaN(expenseData.amount) && expenseData.amount > 0;
+    const amountValid = !isNaN(expenseData.amount) && expenseData.amount > 0;
     const dateIsValid = expenseData.date.toString() !== "Invalid Date";
     const descriptionIsValid = expenseData.description.trim().length > 0;
 
